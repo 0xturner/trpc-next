@@ -21,3 +21,11 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }
+
+model Doggie {
+  id   Int     @id @default(autoincrement())
+  name String
+  age  Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}

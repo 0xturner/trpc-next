@@ -7,6 +7,7 @@ import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { prisma } from '~/server/prisma';
+import { validationSchema } from '~/pages/submit';
 
 /**
  * Default selector for Post.
@@ -17,6 +18,14 @@ const defaultPostSelect = Prisma.validator<Prisma.PostSelect>()({
   id: true,
   title: true,
   text: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+const defaultDoggieSelect = Prisma.validator<Prisma.DoggieSelect>()({
+  id: true,
+  name: true,
+  age: true,
   createdAt: true,
   updatedAt: true,
 });
@@ -102,4 +111,11 @@ export const postRouter = router({
       });
       return post;
     }),
+  new: publicProcedure.input(validationSchema).mutation(async ({ input }) => {
+    const post = await prisma.doggie.create({
+      data: input,
+      select: defaultDoggieSelect,
+    });
+    return post;
+  }),
 });
