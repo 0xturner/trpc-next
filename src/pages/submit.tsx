@@ -15,8 +15,8 @@ import { trpc } from '../utils/trpc';
 
 // validation schema is used by server
 export const validationSchema = z.object({
-  name: z.string().min(5),
-  age: z.number().gte(0),
+  name: z.string().min(1),
+  age: z.coerce.number().optional(),
 });
 
 const useZodForm = <TSchema extends z.ZodType>(
@@ -39,9 +39,10 @@ const SubmitPage: NextPageWithLayout = () => {
     schema: validationSchema,
     defaultValues: {
       name: '',
-      age: 0,
     },
   });
+
+  console.log(methods.formState.errors);
 
   const mutation = trpc.post.new.useMutation({
     onSuccess: async () => {
@@ -67,6 +68,12 @@ const SubmitPage: NextPageWithLayout = () => {
           Name
           <br />
           <input {...methods.register('name')} />
+          <input
+            {...methods.register('age', {
+              setValueAs: (v) => (v === '' ? undefined : parseInt(v, 10)),
+            })}
+            type="number"
+          />
         </label>
 
         <button type="submit" disabled={mutation.isLoading}>

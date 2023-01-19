@@ -4,9 +4,7 @@
   "private": true,
   "scripts": {
     "migrate-sqlite": "prisma migrate dev --name init --schema=./prisma/_sqlite/schema.prisma",
-    "migrate-postgres": "prisma migrate dev",
     "generate-sqlite": "prisma generate --schema=./prisma/_sqlite/schema.prisma",
-    "generate-postgres": "prisma generate",
     "prisma-studio-sqlite": "prisma studio --schema=./prisma/_sqlite/schema.prisma",
     "prisma-studio-postgres": "prisma studio",
     "db-seed": "prisma db seed",
@@ -22,7 +20,6 @@
     "start": "next start",
     "lint": "eslint --ext \".js,.ts,.tsx\" --report-unused-disable-directives --report-unused-disable-directives src",
     "lint-fix": "pnpm lint --fix",
-    "migrate-dev": "prisma migrate dev",
     "migrate": "prisma migrate deploy",
     "test": "run-s test:*",
     "test:unit": "vitest run",
